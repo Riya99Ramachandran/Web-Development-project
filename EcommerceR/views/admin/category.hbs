@@ -1,0 +1,81 @@
+
+{{>adminNav}}
+
+<link rel="stylesheet" href="../../stylesheets/style.css">
+<section class="vh-100">
+
+  <div class="container  h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-9 col-lg-7 col-xl-6">
+
+        <table class="table">
+          <h1 class="pb-3">Categories</h1>
+          <thead>
+
+            <tr>
+
+              <th scope="col-">SI no</th>
+              <th scope="col">category</th>
+              <th scope="col">Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {{#each categories}}
+            <tr>
+              <th scope="row">{{counter @index}}</th>
+              <td>{{category}}</td>
+
+              <td>
+                <a href="/admin/category/edit?id={{_id}}" class="btn btn-primary">Edit</a>
+                <a href="/admin/category/delete?id={{_id}}" class="btn btn-danger">Delete</a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-6 col-lg-4 col-xl-4 offset-xl-1">
+        <h1 class="pb-3 font-weight-bold">Add category</h1>
+        {{#if editCategory}}
+        <form action="/admin/category/update" method="post">
+          <div class="form-outline mb-4">
+            <input type="category" name="categoryUpdate" value={{editCategory}} id="categoryUpdate"
+              class="form-control form-control-lg border-dark" placeholder="Update Category" required/>
+          </div>
+
+          <h5 class="text-danger text-center">{{message}}</h5>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block w-100 border-dark">Update</button>
+
+
+          {{else}}
+          <form action="/admin/category" method="post">
+            <div class="form-outline mb-4">
+              <input type="category" name="category" id="category" class="form-control form-control-lg border-dark"
+                placeholder="Add category" />
+                <h5 class="text-danger text-center" id="message">{{message}}</h5>
+            </div>
+
+            
+
+            <button type="submit" class="btn btn-warning btn-lg btn-block w-100 border-dark">Add+</button>
+
+          </form>
+          {{/if}}
+      </div>
+    </div>
+  </div>
+</section>
+{{>foot}}
+<script>
+  window.onload = function () {
+    const msg = document.getElementById("message");
+    if (msg.innerHTML !== "") {
+      setTimeout(function () {
+        msg.style.display = "none";
+      }, 2000); // 3000 milliseconds = 3 seconds
+    }
+  };
+</script>

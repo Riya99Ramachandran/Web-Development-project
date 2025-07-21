@@ -1,0 +1,63 @@
+{{> head}}
+
+<div class="hero_area">
+  <!-- header section strats -->
+  <header class="header_section">
+    <nav class="navbar navbar-expand-lg custom_nav-container ">
+      <a class="navbar-brand" href="/user">
+        <span>
+          <img src="https://i.postimg.cc/B6g5VdW9/logo.png" style="max-width:10rem">
+        </span>
+      </a>
+    
+
+      <section class="vh-100">
+
+        <div class="container py-5 h-100">
+          <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+              <img src="https://i.postimg.cc/d0Tqsyw4/A-pair-of-trainers.png" class="img-fluid"
+                alt="Phone image">
+            </div>
+
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+              <h1 class="pb-3 font-weight-bold">sign-in</h1>
+              <script src="../javascripts/validation.js"></script>
+              <h5 class="text-success text-center">{{successmessage}}</h5>
+
+              <form onsubmit="loginValidate()" action="/login" method="post">
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="email" name="email" id="lEmail" class="form-control form-control-lg border-dark"
+                    placeholder="Email address" />
+                  <div class="error" id="lEmailErr"></div>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+
+                  <input type="password" id="lPassword" name="password" class="form-control form-control-lg border-dark"
+                    placeholder="Password" />
+                  <div class="error" id="lPassErr"></div>
+                </div>
+                <h5 class="text-danger text-center">{{message}}</h5>
+                <div class="d-flex justify-content-around align-items-center mb-4">
+                  <h6>Forgot your password<a href="/forgotPassword"> click here</a></h6>
+                </div>
+
+
+                <button type="submit" class="btn btn-success btn-lg btn-block w-100 border-dark">Login</button>
+                <a class="btn btn-danger btn-lg btn-block w-100 mt-2 border-dark" href="/otp" role="button">
+                  login with otp
+                </a>
+                <a class="btn btn-primary btn-lg btn-block w-100 mt-2 border-dark mb-3" href="/signup" role="button">
+                  sign-up
+                </a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {{>foot}}

@@ -1,0 +1,347 @@
+{{>head}}
+
+{{#if userData}}
+{{>userNavLogged}}
+{{else}}
+{{>userNav}}
+{{/if}}
+
+
+<div class=" container-fluid my-5 ">
+    <div class="row justify-content-center ">
+        <div class="col-xl-10">
+            <div class="card shadow-lg ">
+                <div class="row p-2 mt-3 justify-content-between mx-sm-2">
+                </div>
+
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="card border-0">
+                            <div class="card-header pb-0">
+                                <h2 class="card-title space">Payment Option</h2>
+                                <hr class="my-0 mt-4">
+
+                                <div class="">
+                                    <p class="card-text text-muted mt-5 mb-2  space">HAVE A COUPON CODE?</p>
+                                </div>
+                                <h5 class="text-uppercase mb-2  mt-4">Give code</h5>
+
+
+                                <div class="mb-5">
+                                    <div class="form-outline">
+                                        <div style="display : flex; gap: 2px;">
+                                            <input style="border: 1px solid black;" name="coupon"
+                                                placeholder="enter your code" type="text" id="form3Examplea2"
+                                                class="form-control form-control-lg" />
+                                            <button type="submit" class="btn btn-warning ms-2 border-dark"
+                                                onclick="couponApply('{{cart._id}}','{{coupon.value}}','{{totalBill}}')">Apply</button>
+                                        </div>
+                                        <span style="color: green;" id="validation2"
+                                            class="ps-3"><b>{{couponSMsg}}</b></span>
+
+                                        <span style="color: red;" class="ps-3"><b
+                                                id="validation">{{couponMsg}}</b></span>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <p class="card-text text-muted mt-4 mb-2  space">SELECT PAYMENT OPTION</p>
+                                </div>
+
+                                <form id="checkout-form">
+                                    <div class="form-check">
+                                        <input class="form-check-input mt-5 mx-3 js-radioInput" type="radio"
+                                            name="radio" value="razorpay" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            <img class=""
+                                                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.j2store.org%2Fimages%2Fextensions%2Fpayment_plugins%2FRazorpay.png&f=1&nofb=1&ipt=fe589e7cb95e5c7ba12999fc769018c0e55be5ff8246295ee5cb1867f170bf67&ipo=images"
+                                                alt="" height="100" width="200">
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input mt-5 mx-3 js-radioInput" type="radio"
+                                            name="radio" value="COD" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            <img src="http://cdn.onlinewebfonts.com/svg/img_462168.png" alt=""
+                                                height="70" width="180">
+                                        </label>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mt-4">
+                        <div class="card border-0 ">
+                            <div class="card-header card-2">
+                                <p class="card-text text-muted mt-md-4 space">ORDER SUMMARY </p>
+                                <hr class="my-2">
+                            </div>
+
+
+                            <div class="card-body pt-0">
+
+                                {{#each cart}}
+                                <div class="row  justify-content-between">
+                                    <div class="col-auto col-md-7">
+                                        <div class="media flex-column flex-sm-row">
+                                            <img class=" img-fluid mb-2" src="/images/{{img1}}" width="62" height="62">
+                                            <div class="media-body  my-auto">
+                                                <div class="row ">
+                                                    <div class="col-auto">
+                                                        <h6 class="mb-0"><b>{{productName}}</b></h6>
+                                                        <small class="text-muted">{{category}}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" pl-0 flex-sm-col col-auto  my-auto">
+                                        <h6 class="">{{quantity}} </h6>
+                                    </div>
+                                    <div class=" pl-0 flex-sm-col col-auto  my-auto ">
+                                        <h6><b>₹ {{bill}}</b></h6>
+                                    </div>
+                                </div>
+                                <hr class="my-2">
+                                {{/each}}
+
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        <div class="row justify-content-between">
+                                            <div class="col-4">
+                                                <h6 class="mb-3"><b>Subtotal</b></h6>
+                                            </div>
+                                            <div class="flex-sm-col col-auto">
+                                                <h6 class="mb-3"><b>₹ {{totalBill}}</b></h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-4">
+                                                <h6 class="mb-3"><b id="couponDiscount"></b></h6>
+                                            </div>
+                                            <div class="col-6">
+                                                <h6 class="mb-3" id="couponCode" style="color : green"></h6>
+                                            </div>
+                                            <div class="flex-sm-col col-auto">
+                                                <h6 style=" color : red" class="mb-3"><b id="couponValue"></b></h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <h6 class="mb-3"><b>Shipping</b></h6>
+                                            </div>
+                                            <div class="flex-sm-col col-auto">
+                                                <h6 class="mb-3" style="color: green"><b>Free</b></h6>
+                                            </div>
+                                        </div>
+                                        <hr class="my-0">
+                                        <div class="row justify-content-between">
+                                            <div class="col-3">
+                                                <h6 class="mb-3"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-4">
+                                                <h6><b>Total</b></h6>
+                                            </div>
+                                            <div class="flex-sm-col col-auto">
+                                                <h6 class="mb-3"><b id="totalBill2">₹ {{totalBill}} </b></h6>
+                                            </div>
+                                            <input type="hidden" name="orderBill" id="totalBillInput"
+                                                value="{{totalBill}}">
+                                        </div>
+                                        <hr class="my-0">
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="keyId" value="{{keyId}}">
+                                <div class="row mb-5 mt-4 ">
+                                    <div class="col-md-7 col-lg-6 p-2"><button id="my_button" type="submit"
+                                            disabled="disabled" class="btn btn-block btn-success btn-lg border-dark"
+                                            style="width: 100%;  border-radius:30px;">Confirm
+                                            Order</button></div>
+                                </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{>foot}}
+
+
+<script>
+
+    let inputElems = document.getElementsByClassName("js-radioInput");
+    for (let i = inputElems.length - 1; i >= 0; --i) {
+        let elem = inputElems[i];
+        elem.onchange = function () {
+            document.getElementById("my_button").removeAttribute("disabled");
+        };
+    }
+
+    $("#checkout-form").submit((e) => {
+        console.log("ajax working")
+        e.preventDefault()
+        $.ajax({
+            url: '/cart/checkout/paymentMode',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess) {
+                    console.log("COD working")
+                    location.replace('/orderRedirect')
+                } else if (response.razorpay) {
+                    console.log("razorpay working")
+                    razorpay(response.order, response.bill)
+                }
+            }
+        })
+    })
+</script>
+
+
+<script>
+
+    function razorpay(order, bill) {
+        let keyId = document.getElementById("keyId").value
+        let options = {
+            "key": keyId, // Enter the Key ID generated from the Dashboard
+            "amount": bill * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Mzee Shoes",
+            "description": "Buy  Shoes",
+            "image": "https://i.postimg.cc/B6g5VdW9/logo.png",
+            "handler": function (response) {
+                RazoverifyPayment(response, order)
+            },
+            "prefill": {
+                "name": "Mzee Shoes",
+                "email": "MzeeShoes@gmail.com",
+                "contact": "+91 7994299413"
+            },
+            "notes": {
+                "address": "Mzee-Shoes,HustleHub Techpark,Somasundara palaya,Hsr Layout,Bangalore, Karnataka, India"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        }
+        let rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function RazoverifyPayment(payment, order) {
+        location.replace('/orderRedirect')
+
+        $.ajax({
+            url: '/userhome/razo-verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    console.log("succes")
+                    location.href = '/orderSuccess'
+                } else {
+                    // need to render payment faild page
+                   location.href='/orderFailed'
+                }
+            }
+        })
+    }
+</script>
+
+
+<script>
+
+    function couponApply(id, value, bill) {
+        let coupon = document.getElementById("form3Examplea2").value;
+        console.log(value)
+        console.log(bill)
+        console.log(coupon);
+
+        if (coupon == "") {
+            document.getElementById("validation2").innerHTML = ""
+            document.getElementById("validation").innerHTML = "Please enter a coupon code";
+        } else {
+            fetch("/applyCoupon", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    coupon: coupon,
+                    bill: bill,
+                    id: id
+                })
+            })
+
+                .then(respo => {
+                    return respo.json();
+                })
+                .then(response => {
+                    if (response.code == coupon.toUpperCase()) {
+                        if (response.status == "Active") {
+                            if (response.minBill > bill) {
+                                document.getElementById("validation2").innerHTML = "";
+                                document.getElementById("validation").innerHTML = "Minimum Bill Required is ₹ " + response.minBill;
+                                document.getElementById("couponCode").innerHTML = "";
+                                document.getElementById("couponDiscount").innerHTML = "";
+                                document.getElementById("couponValue").innerHTML = "";
+                                document.getElementById("totalBill2").innerHTML = "₹ " + bill;
+                            } else {
+                                document.getElementById("validation").innerHTML = "";
+                                document.getElementById("couponCode").innerHTML = coupon;
+                                document.getElementById("couponDiscount").innerHTML = "Coupon Discount";
+                                document.getElementById("couponValue").innerHTML = response.value + "%";
+                                document.getElementById("totalBill2").innerHTML = "₹ " + (bill - (bill * response.value / 100));
+                                document.getElementById("validation2").innerHTML = coupon + "-Coupon Added Successfully";
+                            }
+                        } else {
+                            document.getElementById("validation2").innerHTML = "";
+                            document.getElementById("validation").innerHTML = "Coupon Expired";
+                            document.getElementById("couponCode").innerHTML = "";
+                            document.getElementById("couponDiscount").innerHTML = "";
+                            document.getElementById("couponValue").innerHTML = "";
+                            document.getElementById("totalBill2").innerHTML = "₹ " + bill;
+
+                        }
+                    } else {
+                        document.getElementById("validation2").innerHTML = "";
+                        document.getElementById("validation").innerHTML = "Coupon not found,try again";
+                        document.getElementById("couponCode").innerHTML = "";
+                        document.getElementById("couponDiscount").innerHTML = "";
+                        document.getElementById("couponValue").innerHTML = "";
+                        document.getElementById("totalBill2").innerHTML = "₹ " + bill;
+
+
+
+                    }
+
+                })
+
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
+    }
+
+    window.onload = function () {
+        let msg = document.getElementById("validation");
+        if (msg.innerHTML !== "") {
+            setTimeout(function () {
+                msg.style.display = "none";
+            }, 2000); // 3000 milliseconds = 3 seconds
+        }
+    };
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>

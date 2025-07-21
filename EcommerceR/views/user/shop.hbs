@@ -1,0 +1,199 @@
+{{>head}}
+
+{{#if userData}}
+{{>userNavLogged}}
+{{else}}
+{{>userNav}}
+{{/if}}
+
+<!-- end hero area -->
+
+<!-- shop section -->
+
+<div class="row">
+    <div class="h-100 col-sm-12 col-lg-2 col-md-12 col-xl-2 d-flex flex-column sticky align-content-evenly p-5 mt-5">
+      <h3 class="mb-5 fw-bold mt-2">Categories</h3>
+       <h5>
+        <a href="/displayCategory?id=All" style="text-decoration: none; color: #6a6c6d;;">
+          <i class="fa fa-long-arrow-left"></i> <span class="ml-1">All Products</a>
+      </h5>
+      {{#each categories}}
+      <h5>
+        <a href="/displayCategory?id={{category}}" style="text-decoration: none; color:#6a6c6d;">
+          <i class="fa fa-long-arrow-left"></i> <span class="ml-1">{{category}}</a>
+      </h5>
+      {{/each}}
+     <div class="form-outline mt-4" style="max-width:10em;">
+      <h3 class="fw-bold mt-4">Sort</h3>
+                        <select name="sortShop" class="form-control form-control-lg border-dark" id="sortshop" onchange="sort()">
+                            <option>Sort Orders</option>
+                             <option value="3">newly listed</option>
+                              <option  value="4">early listed</option>
+                            <option  value="1">price low to high</option>
+                            <option value="2">price high to low</option>
+                        </select>
+                    </div>
+  </div>
+
+  <section class="shop_section layout_padding col-sm-12 col-md-12 col-lg-9 col-xl-9">
+    <div class="container">
+            <h6 class="p-2 d-flex justify-content-end text-muted" id="itemsLength2">{{cLength}} items</h6>
+      <div class="heading_container heading_center">
+        {{#ifnoteq categoryName "All"}}
+        <h2>
+          Latest {{categoryName}} Products
+        </h2>
+        {{/ifnoteq}}
+        {{#ifeq categoryName "All"}}
+        <h2>
+          All Products
+        </h2>
+        {{/ifeq}}
+      </div>
+      <div class="row">
+        {{#if products}}
+        {{#each products}}
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+          <div class="box shadow-lg" style="background-color:{{bgColor}}">
+            <a> <button onclick="wishlistClick('{{_id}}')"
+                class="btn position-absolute start-75 end-0 bg-light rounded-circle mt-1 me-1 shadow"
+                style="color:brown">
+                <i class="fa-solid fa-heart" area-hidden="true"></i>
+              </button>
+            </a>
+            <a href="/productView?id={{_id}}">
+              <div class="img-box">
+                <img src="/images/{{img1}}" alt="">
+              </div>
+              {{#ifnoteq __v 0}}
+              <div class="new">
+                <span>
+                  new
+                </span>
+              </div>
+              {{/ifnoteq}}
+               {{#ifnoteq offer 0}}
+             <div class="new2">
+              <span>
+                {{offer}}%
+              </span>
+            </div>
+            {{/ifnoteq}}
+            </a>
+          </div>
+          <div class="mt-2 detail-box">
+            <h6>
+              {{productName}}
+            </h6>
+            <h6>
+              Price
+              <span>
+                ₹{{price}}
+              </span>
+            </h6>
+            <div class="btn-box">
+              <a href="/productView?id={{_id}}" class="btn shadow-sm">
+                Explore
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {{/each}}
+        {{else}}
+       
+        <h4 class="text-center text-danger">No Products Found</h4>
+        {{/if}}
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+<input type="hidden" id="sortHidden" value="0"></input>
+ <input type="hidden" id="page" value="{{page}}">
+ {{#ifnoteq count 0}}
+<div class="container">
+<nav aria-label="Page navigation example">
+ <ul class="pagination d-flex justify-content-center">
+  <li class="page-item">
+    <a class="page-link" onclick="disCategory1('{{count}}')" id="down" aria-label="Previous">
+      <span aria-hidden="true">&laquo;</span>
+    </a>
+  </li>
+  {{#times count}}
+  <li class="page-item">
+    <a class="page-link" href="/displayCategory?id={{categoryName}}&page={{@index}}">{{@index}}</a>
+  </li>
+  {{/times}}
+  <li class="page-item">
+    <a class="page-link" onclick="disCategory('{{count}}')" id="up" aria-label="Next">
+      <span aria-hidden="true">&raquo;</span>
+    </a>
+  </li>
+</ul>
+
+</nav>
+</div>
+{{/ifnoteq}}
+    <script>
+ function disCategory(count) {
+  let page = parseInt(document.getElementById("page").value);
+  if (page >= count-1) {
+    console.log("Cannot go to next page!");
+    document.getElementById("up").setAttribute("disabled", true);
+  } else {
+    console.log("Going to next page...");
+    page++;
+   window.location.href = "/displayCategory?id={{categoryName}}&page="+page;
+  }
+}
+
+  function disCategory1(count){
+     let page = document.getElementById("page").value;
+      if(page==count-1){
+        document.getElementById("down").style.display="disabled";
+      }else{
+      page--;
+         window.location.href = "/displayCategory?id={{categoryName}}&page="+page;
+      }
+  }
+
+  function sort(){
+  let page = parseInt(document.getElementById("page").value);
+    let sort = document.getElementById("sortshop").value;
+    window.location.href = "/displayCategory?id={{categoryName}}"+"&page="+page+"&sort="+sort;
+  }
+  </script>
+
+
+<script>
+  function wishlistClick(data) {
+    const id = data;
+    fetch("/wishlist/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data == "not logged in") {
+          window.location.href = "/login";
+        } else {
+          location.reload();
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+</script>
+<!-- end shop section -->
+{{>footer}}
+{{>foot}}

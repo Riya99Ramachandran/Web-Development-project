@@ -1,0 +1,97 @@
+<div class="hero_area">
+  <!-- header section strats -->
+  <header class="header_section">
+    <nav class="navbar navbar-expand-lg custom_nav-container ">
+      <a class="navbar-brand" href="/user">
+        <span>
+          <img src="https://i.postimg.cc/B6g5VdW9/logo.png" style="max-width:9rem">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class=""></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/user">Home
+            </a>
+          </li>
+         
+         
+          <li class="nav-item">
+            <a class="nav-link" href="/displayCategory?id=All">
+             Shop
+            </a>
+          </li>
+      
+     
+          <li class="nav-item">
+            <a class="nav-link" href="/why">
+              Why Us
+            </a>
+          </li>
+
+          <div class="user_option">
+            <a href="/profile" style="background-color:black;color:white;padding:5px 20px 5px 20px;border-radius:14px;">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <span>
+                {{userData.name}}
+              </span>
+            </a>
+
+            
+            <a class="nav-icon-link my-auto position-relative" href="/cart?id={{userData._id}}"> <i
+                class="fa fa-shopping-bag" aria-hidden="true"></i><span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartLength" >{{cart.length}} </span></a>
+            </a>
+          
+
+            {{#if wishlist}}
+
+            <a class="nav-icon-link my-auto position-relative" href="/wishlist?id={{userData._id}}"><i
+                class="fa-solid fa-heart" area-hidden="true"></i><span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                id="wishlistLength">{{wishlist.items.length}}
+              </span></a>
+            {{else}}
+            <a href="/wishlist?id={{userData._id}}">
+              <i class="fa-solid fa-heart" area-hidden="true" id="wishlistLength" value="0"></i>
+            </a>
+            {{/if}}
+          </div>
+          <div class="user_option">
+            <form class="form-inline mx-2" action="/search">
+              <input type="text" class="search_area" name="search" placeholder="search">
+              <button class="btn nav_search-btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+            <a href="/logout" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to Logout?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="/logout"><button type="button" class="btn btn-danger">Logout</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  

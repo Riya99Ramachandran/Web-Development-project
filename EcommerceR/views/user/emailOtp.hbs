@@ -1,0 +1,45 @@
+{{>head}}
+<div class="hero_area">
+  <!-- header section strats -->
+  <header class="header_section">
+    <nav class="navbar navbar-expand-lg custom_nav-container ">
+      <a class="navbar-brand" href="/user">
+        <span>
+          <img src="https://i.postimg.cc/B6g5VdW9/logo.png" style="max-width:10rem">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class=""></span>
+      </button>
+
+      <section class="vh-100">
+        <div class="container py-5 h-75">
+          <div class="row d-flex align-items-center justify-content-center h-100">
+
+            <div class="col-md-12 col-lg-12 col-xl-12">
+
+              <form onsubmit="loginValidate()" action="/forgotPassword" method="post">
+                <script src="../javascripts/validation.js"></script>
+
+                <h1 class="pb-3 font-weight-bold">verify with your Email</h1>
+                <h5 class="text-danger text-center">{{message}}</h5>
+                <!-- Mobile input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="lEmail" name="email" class="form-control form-control-lg border-dark"
+                    placeholder="Enter your Email Address" required />
+                  <div class="error" id="lEmailErr"></div>
+                </div>
+
+                <div class="d-flex justify-content-around align-items-center mb-3">
+                  <h6>login with phone<a href="/otp"> click here</a></h6>
+                </div>
+                
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-lg btn-block w-100 border-dark">Send Otp</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      {{>foot}}
